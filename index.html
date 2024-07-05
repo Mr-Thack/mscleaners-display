@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+/* Gold title */
+#title {
+  color: gold;
+  font-size: 100px;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: black;
+}
+
+/* Dashed objects */
+.deal {
+  color: red;
+  font-size: 80px;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+  border-style: dashed;
+  border-color: green;
+} 
+</style>
+<script>
+const DEALS = [
+  "DRY CLEAN 10 PIECES, 1 FREE",
+  "BONUS: REFER A FRIEND, $5 OFF"
+];
+
+const REFRESH_TIME = 5; // Time in minutes
+
+// For some reason, the TV does not like if I fit this into setTimeout directly
+function reload() {
+  location.reload();
+}
+
+// Add a deal object onto the page under the "deals" centered list
+function addDeal(text) {
+  const deal = document.createElement("h1");
+  deal.appendChild(document.createTextNode(text));
+  deal.classList.add("deal");
+  document.getElementById("deals").appendChild(deal);
+}
+
+// Set Title with the name of the month
+function setTitle() {
+  const MONTHS = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+  const date = new Date();
+  document.getElementById("title").innerHTML = MONTHS[date.getMonth()] + " DEAL:";
+}
+
+// We need to wait till the page loads and then we can run anything which depends upond an HTML element
+function setup() {
+  setTimeout(reload, REFRESH_TIME * 60 * 1000);
+  setTitle();
+  DEALS.forEach(addDeal);
+}
+
+window.onload = setup;
+</script>
+
+<body>
+
+<!- First stuff -->
+<center>
+  <h1 class="deal">UNDER NEW MANAGEMENT!!!</h1>
+  <!-- This will be set through JS -->
+  <h1 id="title"></h1>
+</center>
+
+<!-- This will be populated later with objects for each deal -->
+<center id="deals"></center>
+
+</body>
+</html>
